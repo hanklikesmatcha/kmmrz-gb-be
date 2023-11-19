@@ -1,0 +1,37 @@
+version: '3'
+services:
+  # app:
+  #   container_name: kmmrz-be
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./app:/app
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - kmmrz-db
+  #   networks:
+  #     - kmmrz-network
+  #   links:
+  #     - kmmrz-db:kmmrz-db
+
+  kmmrz-db:
+    image: postgres:13  # Adjust the PostgreSQL version as needed
+    restart: always
+    environment:
+      POSTGRES_DB: kmmrz-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rpg90930
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432:5432"
+    networks:
+      - kmmrz-network
+    command:
+      ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+
+networks:
+  kmmrz-network:
+    name: server
+    driver: bridge
